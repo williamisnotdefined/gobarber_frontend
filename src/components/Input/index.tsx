@@ -51,6 +51,7 @@ const Input: React.FC<InputProps> = ({ icon: Icon, name, ...rest }) => {
         type="text"
         {...rest}
       />
+      {error}
     </Container>
   );
 };
