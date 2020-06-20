@@ -20,7 +20,7 @@ interface formData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { signIn } = useContext(AuthContext);
+  const { user, signIn } = useContext(AuthContext);
 
   const onSubmit = useCallback(
     async (data: formData): Promise<void> => {
@@ -35,6 +35,7 @@ const SignIn: React.FC = () => {
         });
 
         await schema.validate(data, { abortEarly: false });
+
         signIn({
           email: data.email,
           password: data.password,
