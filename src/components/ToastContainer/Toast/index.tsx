@@ -12,6 +12,7 @@ import { Container } from './styles';
 
 interface ToastProps {
   message: ToastMessage;
+  style: Record<string, unknown>;
 }
 
 const iconsMap = {
@@ -20,7 +21,7 @@ const iconsMap = {
   success: <FiCheckCircle size={20} />,
 };
 
-const Toast: React.FC<ToastProps> = ({ message }) => {
+const Toast: React.FC<ToastProps> = ({ message, style }) => {
   const { id, type, description, title } = message;
   const { removeToast } = useToast();
 
@@ -35,7 +36,12 @@ const Toast: React.FC<ToastProps> = ({ message }) => {
   }, [id, removeToast]);
 
   return (
-    <Container key={id} type={type} hasDescription={!!description}>
+    <Container
+      key={id}
+      type={type}
+      hasDescription={!!description}
+      style={style}
+    >
       {iconsMap[type || 'info']}
 
       <div>

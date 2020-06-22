@@ -36,6 +36,7 @@
         "allowExpressions": true
       }
     ],
+    "@typescript-eslint/ban-types": ["error", {}],
     "import/extensions": [
       "error",
       "ignorePackages",
