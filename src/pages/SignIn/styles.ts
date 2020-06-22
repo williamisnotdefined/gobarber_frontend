@@ -32,9 +32,8 @@ export const AnimationContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  animation: ${appearFromLeft} 1s;
-
   margin: 0 auto;
+  animation: ${appearFromLeft} 1s;
 
   form {
     margin: 80px 0px;
