@@ -1,4 +1,5 @@
 import React, { useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -9,7 +10,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
-import { Container, Content, Background } from './styles';
+import { Container, Content, Background, AnimationContainer } from './styles';
 
 import logoImg from '../../assets/logo.svg';
 
@@ -45,26 +46,28 @@ const SignUp: React.FC = () => {
     <Container>
       <Background />
       <Content>
-        <img src={logoImg} alt="GoBarber" />
+        <AnimationContainer>
+          <img src={logoImg} alt="GoBarber" />
 
-        <Form ref={formRef} onSubmit={onSubmit}>
-          <h1>Faça seu cadastro</h1>
+          <Form ref={formRef} onSubmit={onSubmit}>
+            <h1>Faça seu cadastro</h1>
 
-          <Input icon={FiUser} name="name" placeholder="nome" />
-          <Input icon={FiMail} name="email" placeholder="e-mail" />
-          <Input
-            icon={FiLock}
-            name="password"
-            type="password"
-            placeholder="senha"
-          />
+            <Input icon={FiUser} name="name" placeholder="nome" />
+            <Input icon={FiMail} name="email" placeholder="e-mail" />
+            <Input
+              icon={FiLock}
+              name="password"
+              type="password"
+              placeholder="senha"
+            />
 
-          <Button type="submit">Cadastrar</Button>
-        </Form>
+            <Button type="submit">Cadastrar</Button>
+          </Form>
 
-        <a href="/forgot">
-          <FiArrowLeft size={16} /> Voltar para logon
-        </a>
+          <Link to="/">
+            <FiArrowLeft size={16} /> Voltar para logon
+          </Link>
+        </AnimationContainer>
       </Content>
     </Container>
   );
