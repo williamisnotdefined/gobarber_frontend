@@ -5,6 +5,7 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext';
 import getValidationErrors from '../../utils/getValidationErrors';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -20,7 +21,8 @@ interface formData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const onSubmit = useCallback(
     async (data: formData): Promise<void> => {
@@ -36,16 +38,24 @@ const SignIn: React.FC = () => {
 
         await schema.validate(data, { abortEarly: false });
 
-        signIn({
+        await signIn({
           email: data.email,
           password: data.password,
         });
       } catch (err) {
-        const errors = getValidationErrors(err);
-        formRef.current?.setErrors(errors);
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+          formRef.current?.setErrors(errors);
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Ocorreu um erro ao fazer login, cheque as credenciais',
+        });
       }
     },
-    [signIn],
+    [signIn, addToast],
   );
 
   return (
@@ -55,13 +65,19 @@ const SignIn: React.FC = () => {
         <Form ref={formRef} onSubmit={onSubmit}>
           <h1>Faça seu login</h1>
 
-          <Input icon={FiMail} name="email" placeholder="e-mail" />
+          <Input
+            icon={FiMail}
+            name="email"
+            placeholder="e-mail"
+            autoComplete="new-email"
+          />
 
           <Input
             icon={FiLock}
             name="password"
             type="password"
             placeholder="senha"
+            autoComplete="new-password"
           />
 
           <Button type="submit">Entrar</Button>
